@@ -1595,13 +1595,13 @@ function renderHome() {
   for (i = 0; i < list.length; i++) { if ((Number(S.totals[list[i].id]) || 0) > 0) practiced++; }
   var html = '';
 
-  // theme picker FIRST — very top of home, above everything
-  html += themePickerCard();
-
-  // header: kicker + giant title + gold "today" badge (arcade backdrop band)
+  // header FIRST — very top of home, above everything
   html += '<span class="kicker k-sage">' + esc(T('homeKicker', 'Your quiet patch')) + '</span>';
   html += '<div class="home-head home-band"><h1 class="giant">Home</h1>' +
     '<span class="today-badge">' + fmtNum(todayCount()) + '<small>today</small></span></div>';
+
+  // theme picker — right below the header
+  html += themePickerCard();
 
   // companion environment hero — buddy standing in the selected theme
   try { html += buddyEnvHeroHtml(); } catch (e) { /* buddy optional */ }
@@ -1615,6 +1615,9 @@ function renderHome() {
       esc(String(away.length)) + ' ' + esc(awayUnit) + ': ' + names + more + '</div>';
   }
 
+  // getting started — directly above the garden box
+  html += gettingStartedCard();
+
   // garden hero (stats + tend button; the environment scene now lives in the companion hero above)
   html += '<section class="card garden-hero"><span class="kicker k-sage">' + esc(T('heroKicker', 'Your garden')) + '</span>' +
     '<h2 class="hero-title">' + esc(T('heroTitle', 'What you remember, grows.')) + '</h2>' +
@@ -1624,9 +1627,6 @@ function renderHome() {
     '<div class="stat"><b>' + fmtNum(S.lifetime) + '</b><span>lifetime</span></div>' +
     '<div class="stat"><b>' + practiced + '</b><span>phrases</span></div></div>' +
     '<button class="btn-gold btn-block" data-go-bloom style="margin-top:12px">Tend your blooms 🌸</button></section>';
-
-  // getting started — right under the companion
-  html += gettingStartedCard();
 
   // next reward
   html += renderNextReward();
