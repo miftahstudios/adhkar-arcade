@@ -1,9 +1,9 @@
-/* Dhikr Garden Grower — service worker.
+/* Adhkar Arcade — service worker.
    Caches the app shell with relative URLs so the app works from any subpath
    (e.g. https://user.github.io/repo/). Scope is the worker's own directory. */
 'use strict';
 
-var CACHE = 'dhikr-garden-v22';
+var CACHE = 'adhkar-arcade-v23';
 var SHELL = [
   './',
   'index.html',
@@ -15,6 +15,7 @@ var SHELL = [
   'icon-512.png',
   'icon-maskable-512.png',
   'apple-touch-icon.png',
+  'arcade-header.jpg',
   'char-sprout.png',
   'char-flip.png',
   'buddy.png',

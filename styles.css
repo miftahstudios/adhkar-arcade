@@ -1,21 +1,23 @@
-/* Dhikr Garden Grower — dark garden theme.
-   Palette: near-black green, deep card green, cream type, sage muted, gold accents.
+/* Adhkar Arcade — dark arcade theme.
+   Palette: near-black indigo, deep indigo cards, cream type, neon cyan muted, gold accents.
    Latin: Nunito 800/900. Arabic: Noto Naskh Arabic (never substituted). */
 
 :root {
-  --bg: #0b100e;
-  --card: #12211a;
-  --card-deep: #0d1611;
-  --inset: #0e1713;
-  --border: rgba(255, 255, 255, .08);
+  --bg: #0d0a1c;
+  --card: #161130;
+  --card-deep: #0f0b24;
+  --inset: #120e28;
+  --border: rgba(255, 255, 255, .09);
   --cream: #f4efe3;
-  --body: #bcc9c0;
-  --sage: #93a89b;
-  --sage-dim: #6f8677;
+  --body: #c2c7e6;
+  --sage: #8fd8f2;
+  --sage-dim: #6a7f9e;
   --gold: #e3a93c;
   --gold-deep: #d9a13b;
   --gold-ink: #2b2003;
   --green-pop: #4caf7d;
+  --neon: #38e1ff;
+  --neon-pink: #ff5fd2;
   --danger: #e0806f;
   --radius: 20px;
   --font-latin: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -37,10 +39,10 @@ body {
 }
 
 /* ---- ambience tints (set on <body> by JS) — all stay dark ---- */
-body.amb-dawn   { background: linear-gradient(180deg, #0c1417 0%, #0b100e 320px, #0b100e 100%); }
+body.amb-dawn   { background: linear-gradient(180deg, #141126 0%, #0d0a1c 320px, #0d0a1c 100%); }
 body.amb-day    { background: var(--bg); }
-body.amb-sunset { background: linear-gradient(180deg, #120d08 0%, #0b100e 320px, #0b100e 100%); }
-body.amb-night  { background: #060908; }
+body.amb-sunset { background: linear-gradient(180deg, #160f22 0%, #0d0a1c 320px, #0d0a1c 100%); }
+body.amb-night  { background: #080614; }
 
 #app { max-width: 560px; margin: 0 auto; min-height: 100vh; position: relative; }
 
@@ -69,13 +71,13 @@ p { margin: 0 0 10px; line-height: 1.55; }
   display: block; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase;
   font-weight: 800; margin-bottom: 6px; color: var(--sage);
 }
-.k-sage { color: #8fae9a; }
+.k-sage { color: #7fd4f0; }
 .k-gold { color: var(--gold-deep); }
 
 /* back link */
 .backlink {
   background: none; border: none; padding: 10px 0; margin: 0 0 2px;
-  color: #8fae9a; font-family: var(--font-latin); font-weight: 800; font-size: 1rem;
+  color: #7fd4f0; font-family: var(--font-latin); font-weight: 800; font-size: 1rem;
   cursor: pointer; touch-action: manipulation;
 }
 
@@ -100,6 +102,21 @@ p { margin: 0 0 10px; line-height: 1.55; }
 /* ---- home header ---- */
 .home-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .home-head .giant { margin: 0; }
+/* home header band — neon arcade backdrop behind the title */
+.home-band {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius);
+  padding: 20px 16px; margin: 0 -4px 14px;
+  background: #0d0a1c url('arcade-header.jpg') center 32% / cover no-repeat;
+  border: 1px solid var(--border);
+}
+.home-band::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(13,10,28,.30) 0%, rgba(13,10,28,.82) 100%);
+  pointer-events: none;
+}
+.home-band > * { position: relative; z-index: 1; }
+.home-band .giant { text-shadow: 0 2px 20px rgba(56,225,255,.50), 0 0 44px rgba(255,95,210,.25); }
 .today-badge {
   width: 68px; height: 68px; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #f2c14e, var(--gold-deep));
@@ -232,7 +249,7 @@ p { margin: 0 0 10px; line-height: 1.55; }
   cursor: pointer; touch-action: manipulation; width: 100%;
 }
 .btn-gold { background: linear-gradient(180deg, #f2c14e, var(--gold-deep)); color: var(--gold-ink); box-shadow: 0 4px 14px rgba(227,169,60,.35); }
-.btn-green { background: #1d5c3d; color: var(--cream); border: 1px solid rgba(255,255,255,.1); }
+.btn-green { background: #2b2170; color: var(--cream); border: 1px solid rgba(255,255,255,.1); }
 .btn-ghost { background: transparent; color: var(--sage); border: 2px solid rgba(255,255,255,.16); width: auto; padding: 10px 18px; min-height: 48px; }
 .btn-gold:active, .btn-green:active, .btn-ghost:active { transform: scale(.98); }
 .btn-row { display: flex; gap: 10px; }
@@ -420,10 +437,10 @@ label.field { display: block; font-weight: 800; margin: 2px 0 8px; color: var(--
 .lt-row:last-child { border-bottom: none; }
 .lt-num {
   width: 46px; height: 46px; border-radius: 50%; flex: 0 0 auto; position: relative; z-index: 1;
-  border: 1.5px solid var(--sage-dim); color: var(--sage); background: #0b100e;
+  border: 1.5px solid var(--sage-dim); color: var(--sage); background: var(--inset);
   display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.05rem;
 }
-.lt-row.done .lt-num { background: #8fae9a; border-color: #8fae9a; color: #0b100e; }
+.lt-row.done .lt-num { background: #7fd4f0; border-color: #7fd4f0; color: #0d0a1c; }
 .lt-txt { flex: 1 1 auto; min-width: 0; }
 .lt-desc { display: block; font-size: .85rem; color: var(--sage); font-weight: 700; }
 .lt-name { display: block; font-size: 1.3rem; font-weight: 900; color: var(--cream); line-height: 1.25; letter-spacing: -.01em; }
@@ -513,7 +530,7 @@ label.field { display: block; font-weight: 800; margin: 2px 0 8px; color: var(--
 .muted { color: var(--sage); font-size: .9rem; }
 .divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
 .step-num {
-  width: 40px; height: 40px; border-radius: 50%; background: #1d5c3d; color: var(--cream);
+  width: 40px; height: 40px; border-radius: 50%; background: #33247a; color: var(--cream);
   display: inline-flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem;
   margin-right: 10px; flex: 0 0 auto;
 }

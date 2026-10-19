@@ -1,6 +1,6 @@
 {
-  "background_color": "#0b100e",
-  "description": "Grow a garden with every dhikr. A gentle remembrance counter and garden game.",
+  "background_color": "#0d0a1c",
+  "description": "Count your dhikr, raise a companion, and play skill games on arcade time.",
   "display": "standalone",
   "icons": [
     {
@@ -25,10 +25,10 @@
       "type": "image/png"
     }
   ],
-  "name": "Dhikr Garden Grower",
+  "name": "Adhkar Arcade",
   "orientation": "portrait",
   "scope": ".",
-  "short_name": "Dhikr Garden",
+  "short_name": "Adhkar Arcade",
   "start_url": ".",
-  "theme_color": "#0b100e"
+  "theme_color": "#0d0a1c"
 }

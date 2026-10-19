@@ -1,4 +1,4 @@
-// Dhikr Garden Grower - content data
+ // Adhkar Arcade - content data
 // Plain browser script. Sets window.DG_CONTENT. No modules, no imports.
 
 /* Shared morning/evening remembrances (11) */
@@ -404,7 +404,7 @@ const DG_REPLANT_FINISHES = {
 };
 
 window.DG_CONTENT = {
-  meta: { appName: "Dhikr Garden Grower", version: 1 },
+  meta: { appName: "Adhkar Arcade", version: 1 },
   themes: DG_THEMES,
   replantFinishes: DG_REPLANT_FINISHES,
 

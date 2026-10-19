@@ -1,5 +1,5 @@
 /* =========================================================================
-   Dhikr Garden Grower — app shell (vanilla JS, 100% client-side)
+   Adhkar Arcade — app shell (vanilla JS, 100% client-side)
    -------------------------------------------------------------------------
    CONTENT CONTRACT — data.js (written separately) sets window.DG_CONTENT.
    The app tolerates it being missing/partial, and reads BOTH key families:
@@ -1462,7 +1462,7 @@ function sectionGrid() {
     ['learn', 'Learn', getLearnArticles().length + ' articles', '#7fb5e8'],
     ['herbarium', T('collection', 'Herbarium'), herbProg.known + '/' + herbProg.total + ' discovered', '#e08ac0'],
     ['progress', 'Progress', fmtNum(S.lifetime) + ' lifetime', '#7fb5e8'],
-    ['game', 'Adhkar Arcade', '4 games · ' + fmtNum(S.credits) + ' coins', '#9fe0b8']
+    ['game', 'Arcade', '4 games · ' + fmtNum(S.credits) + ' coins', '#9fe0b8']
   ];
   var html = '<span class="kicker k-sage">Explore</span><h2 class="giant-sm">Open a section</h2><div class="sec-grid">';
   for (i = 0; i < items.length; i++) {
@@ -1553,7 +1553,7 @@ function atmosphereCard(now, np, season, hijri) {
 function homeArcadePanel() {
   var html = '<section class="card home-arcade"><div class="row-between" style="align-items:center">' +
     '<div><span class="kicker k-gold">Spend your adhkar credits</span>' +
-    '<h2 style="margin:4px 0 0">Adhkar Arcade</h2></div>' +
+    '<h2 style="margin:4px 0 0">Arcade</h2></div>' +
     '<div style="display:flex;gap:8px;align-items:center">' +
     '<span class="coin-badge"><b>' + fmtNum(S.credits) + '</b><small>coins</small></span>' +
     '<span class="coin-badge"><b>⏱ ' + arcadeTimeStr(S.arcadeTime) + '</b><small>time</small></span></div></div>' +
@@ -1568,6 +1568,14 @@ function homeArcadePanel() {
   html += '</div><button class="btn-gold btn-block" data-arcade-menu style="margin-top:12px">' +
     'Open arcade · ' + GAME_COST + ' coins per attempt</button></section>';
   return html;
+}
+
+/* Getting Started home card — sits right under the companion hero. */
+function gettingStartedCard() {
+  return '<section class="card"><span class="kicker k-sage">' + esc(T('gsKicker', 'New to the arcade?')) + '</span>' +
+    '<div class="row-between"><div><h2 style="margin:0 0 4px">Getting started</h2>' +
+    '<p class="muted" style="margin:0">' + esc(T('gsBody', 'Meet your companion, learn the arcade, and grow with every dhikr.')) + '</p></div>' +
+    '<button class="link-arrow" data-go="getting-started">Start &rarr;</button></div></section>';
 }
 
 function renderHome() {
@@ -1587,17 +1595,16 @@ function renderHome() {
   for (i = 0; i < list.length; i++) { if ((Number(S.totals[list[i].id]) || 0) > 0) practiced++; }
   var html = '';
 
-  // header: kicker + giant title + gold "today" badge
+  // theme picker FIRST — very top of home, above everything
+  html += themePickerCard();
+
+  // header: kicker + giant title + gold "today" badge (arcade backdrop band)
   html += '<span class="kicker k-sage">' + esc(T('homeKicker', 'Your quiet patch')) + '</span>';
-  html += '<div class="home-head"><h1 class="giant">Home</h1>' +
+  html += '<div class="home-head home-band"><h1 class="giant">Home</h1>' +
     '<span class="today-badge">' + fmtNum(todayCount()) + '<small>today</small></span></div>';
 
-  // companion environment hero — buddy standing in the selected theme,
-  // very top of home (theme cards follow right below as the switcher)
+  // companion environment hero — buddy standing in the selected theme
   try { html += buddyEnvHeroHtml(); } catch (e) { /* buddy optional */ }
-
-  // theme picker (stays as the theme switcher, right below the hero it switches)
-  html += themePickerCard();
 
   // while-you-were-away (offline maturation notice)
   if (away.length) {
@@ -1618,14 +1625,11 @@ function renderHome() {
     '<div class="stat"><b>' + practiced + '</b><span>phrases</span></div></div>' +
     '<button class="btn-gold btn-block" data-go-bloom style="margin-top:12px">Tend your blooms 🌸</button></section>';
 
+  // getting started — right under the companion
+  html += gettingStartedCard();
+
   // next reward
   html += renderNextReward();
-
-  // getting started
-  html += '<section class="card"><span class="kicker k-sage">' + esc(T('gsKicker', 'New to the garden?')) + '</span>' +
-    '<div class="row-between"><div><h2 style="margin:0 0 4px">Getting started</h2>' +
-    '<p class="muted" style="margin:0">' + esc(T('gsBody', 'Learn how practice grows your garden and unlocks new blooms.')) + '</p></div>' +
-    '<button class="link-arrow" data-go="getting-started">Start &rarr;</button></div></section>';
 
   // daily rhythm preview
   html += dailyPreview();
@@ -2754,18 +2758,32 @@ function fallbackSteps() {
   ];
 }
 
+function gsInfoCard(emoji, title, body) {
+  return '<div class="card"><div class="step-row" style="margin-bottom:0"><span class="step-num" style="font-size:1.35rem">' + emoji + '</span>' +
+    '<div><h3>' + esc(title) + '</h3><p class="muted" style="margin:0">' + esc(body) + '</p></div></div></div>';
+}
+
 function renderGettingStarted() {
   var sec = el('screen-getting-started');
   if (!sec) return;
   var steps = getSteps();
   if (!steps.length) steps = fallbackSteps();
-  var html = '<h1 class="page-title">' + esc(T('gsEmoji', '🌱')) + ' Getting Started</h1>' +
-    '<p class="page-sub">' + esc(T('gsSub', 'Four steps to your first bloom.')) + '</p>';
+  var html = '<h1 class="page-title">' + esc(T('gsEmoji', '🕹️')) + ' Getting Started</h1>' +
+    '<p class="page-sub">' + esc(T('gsSub', 'Four steps to your first bloom — plus your companion and the arcade.')) + '</p>';
   for (var i = 0; i < steps.length && i < 4; i++) {
-    html += '<div class="card"><div class="step-row"><span class="step-num">' + (i + 1) + '</span>' +
+    html += '<div class="card"><div class="step-row" style="margin-bottom:0"><span class="step-num">' + (i + 1) + '</span>' +
       '<div><h3>' + esc(steps[i].title) + '</h3><p class="muted" style="margin:0">' +
       esc(steps[i].body || '') + '</p></div></div></div>';
   }
+  // your companion — how to treat and care for the buddy
+  html += '<span class="kicker k-gold" style="margin-top:18px">Your companion</span>';
+  html += gsInfoCard('🟢', 'Meet your buddy', 'Your companion grows with your lifetime dhikr — 500 levels across 10 stages, from Newborn to Celestial. It never gets sick and never fades; if you are away a few days it just gets sleepy and misses you.');
+  html += gsInfoCard('🍪', 'Treats and care', 'Every 10 dhikr earns +10 snacks. Feeding spends 10 snacks for a fun cosmetic puff-up — your buddy grows from dhikr, not from snacks. Give it a water, polish, or brush rub, pick 1-hour treat effects, tuck it in at night, or play star fetch together.');
+  html += gsInfoCard('🎁', 'Treasures', 'Secret cosmetic gifts appear as you remember and spend time with your buddy — hats, accessories, and styles, each revealed once and never repeated. Your gold cap is yours from the start and can be put on or taken off anytime.');
+  // arcade — how the economy works
+  html += '<span class="kicker k-gold" style="margin-top:18px">Arcade</span>';
+  html += gsInfoCard('🪙', 'Earning coins and time', 'Complete the morning or evening adhkar checklist to earn coins. Every 10 dhikr in Practice also earns +1:00 of arcade time and +10 snacks — saved time caps at 30:00.');
+  html += gsInfoCard('🎮', 'Playing', 'Each game attempt costs 5 coins and needs time on the clock. Time ticks down while you play — at zero the attempt ends so you can go earn more. If you lose, a short 10-tap dhikr gate opens the next game; gate taps are pure remembrance and earn nothing.');
   html += '<div class="card" style="text-align:center"><button class="btn-gold" id="gs-go">Open Practice 📿</button></div>';
   sec.innerHTML = html;
   var b = el('gs-go');
@@ -3795,7 +3813,7 @@ function renderGame() {
 function renderArcadeMenu(sec) {
   var html = '<button class="backlink" data-go="home">← Home</button>' +
     '<span class="kicker k-sage">Skill games · no luck, just you</span>' +
-    '<h1 class="giant">Adhkar Arcade</h1>' +
+    '<h1 class="giant">Arcade</h1>' +
     '<p class="lede">Spend the coins you earned from morning &amp; evening adhkar, plus your arcade time. Each attempt costs ' +
     GAME_COST + ' coins and needs time on the clock — every 10 dhikr in Practice earns 1:00.</p>';
   html += arcadeBalanceCard();
